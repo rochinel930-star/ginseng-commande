@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commander — Thé Ginseng Congo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vert:     #2D5016;
+    --vert2:    #3D6B1F;
+    --or:       #C8922A;
+    --or2:      #E8A830;
+    --creme:    #FAF6EE;
+    --creme2:   #F0E9D8;
+    --brun:     #4A3520;
+    --texte:    #2A2015;
+    --muted:    #7A6A55;
+    --blanc:    #FFFFFF;
+    --shadow:   0 8px 40px rgba(45,80,22,0.12);
+    --shadow2:  0 2px 16px rgba(45,80,22,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--creme);
+    color: var(--texte);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Motif de fond subtil */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(200,146,42,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(45,80,22,0.06) 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrapper {
+    position: relative; z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 2rem 0 1.5rem;
+    position: relative;
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(200,146,42,0.12);
+    border: 1px solid rgba(200,146,42,0.3);
+    color: var(--or);
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 999px;
+    margin-bottom: 1rem;
+    animation: fadeDown 0.6s ease both;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--vert);
+    margin-bottom: 0.4rem;
+    animation: fadeDown 0.6s 0.1s ease both;
+  }
+  .header h1 span {
+    color: var(--or);
+    font-style: italic;
+  }
+  .header-sub {
+    font-size: 0.92rem; color: var(--muted);
+    line-height: 1.6;
+    animation: fadeDown 0.6s 0.2s ease both;
+  }
+
+  /* ── PRIX BADGE ── */
+  .prix-banner {
+    background: linear-gradient(135deg, var(--vert) 0%, var(--vert2) 100%);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .prix-info { color: rgba(255,255,255,0.75); font-size: 0.82rem; }
+  .prix-info strong { display: block; color: var(--blanc); font-size: 1rem; margin-bottom: 2px; }
+  .prix-montant {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--or2); line-height: 1;
+    text-align: right;
+  }
+  .prix-montant span { font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.6); display: block; margin-top: 2px; }
+
+  /* ── GARANTIES ── */
+  .garanties {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem; margin-bottom: 1.75rem;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+  .garantie {
+    background: var(--blanc);
+    border-radius: 12px; padding: 0.85rem 0.6rem;
+    text-align: center; border: 1px solid var(--creme2);
+    box-shadow: var(--shadow2);
+  }
+  .garantie-icon { font-size: 1.4rem; margin-bottom: 0.3rem; display: block; }
+  .garantie-text { font-size: 0.72rem; color: var(--muted); line-height: 1.4; font-weight: 500; }
+
+  /* ── FORMULAIRE ── */
+  .form-card {
+    background: var(--blanc);
+    border-radius: 24px;
+    padding: 2rem 1.75rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(45,80,22,0.08);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 700;
+    color: var(--vert); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .field { margin-bottom: 1.1rem; }
+  .field label {
+    display: block;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--brun);
+    letter-spacing: 0.3px;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+  }
+  .field label span { color: var(--or); }
+
+  .field input,
+  .field select {
+    width: 100%;
+    background: var(--creme);
+    border: 1.5px solid var(--creme2);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--texte);
+    transition: all 0.2s;
+    appearance: none;
+  }
+  .field input:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--vert);
+    background: var(--blanc);
+    box-shadow: 0 0 0 3px rgba(45,80,22,0.08);
+  }
+  .field input::placeholder { color: var(--muted); opacity: 0.7; }
+
+  /* Compteur quantité */
+  .qty-control {
+    display: flex; align-items: center; gap: 0;
+    border: 1.5px solid var(--creme2);
+    border-radius: 10px; overflow: hidden;
+    background: var(--creme);
+  }
+  .qty-btn {
+    width: 44px; height: 44px;
+    background: none; border: none;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--vert); cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qty-btn:hover { background: rgba(45,80,22,0.08); }
+  .qty-input {
+    flex: 1; text-align: center;
+    border: none !important; border-radius: 0 !important;
+    background: transparent !important;
+    font-size: 1.05rem !important; font-weight: 700 !important;
+    color: var(--vert) !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  /* Total calculé */
+  .total-box {
+    background: linear-gradient(135deg, rgba(45,80,22,0.05), rgba(200,146,42,0.05));
+    border: 1px solid rgba(45,80,22,0.1);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 1.25rem 0;
+  }
+  .total-label { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
+  .total-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--vert);
+    line-height: 1;
+  }
+  .total-val small { font-size: 0.8rem; font-family: 'DM Sans', sans-serif; color: var(--muted); }
+
+  /* ── BOUTON COMMANDER ── */
+  .btn-commander {
+    width: 100%;
+    background: linear-gradient(135deg, #25D366 0%, #1DA851 100%);
+    color: var(--blanc);
+    border: none; border-radius: 14px;
+    padding: 1.1rem 1.5rem;
+    font-size: 1rem; font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    transition: all 0.25s;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.35);
+    position: relative; overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .btn-commander::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    border-radius: 14px;
+  }
+  .btn-commander:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(37,211,102,0.45);
+  }
+  .btn-commander:active { transform: translateY(0); }
+  .btn-commander.loading { pointer-events: none; opacity: 0.8; }
+
+  .btn-icon { font-size: 1.3rem; }
+
+  /* ── NOTE LIVRAISON ── */
+  .note-livraison {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    background: rgba(200,146,42,0.08);
+    border-left: 3px solid var(--or);
+    border-radius: 0 10px 10px 0;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    font-size: 0.82rem; color: var(--brun); line-height: 1.5;
+  }
+  .note-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SUCCESS STATE ── */
+  .success-overlay {
+    display: none;
+    text-align: center; padding: 2rem 1rem;
+  }
+  .success-overlay.show { display: block; animation: fadeUp 0.4s ease; }
+  .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--vert);
+    margin-bottom: 0.5rem;
+  }
+  .success-text { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    text-align: center;
+    font-size: 0.75rem; color: var(--muted);
+    margin-top: 2rem; line-height: 1.6;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .footer-note strong { color: var(--vert); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+  .loading .spinner { display: block; }
+  .loading .btn-text { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--texte); color: var(--blanc);
+    padding: 0.75rem 1.5rem; border-radius: 999px;
+    font-size: 0.88rem; font-weight: 500;
+    transition: transform 0.3s ease;
+    z-index: 999; white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #c0392b; }
+  .toast.success { background: #27ae60; }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">🌿 Produit Naturel Premium</div>
+    <h1>Thé <span>Ginseng</span></h1>
+    <p class="header-sub">Énergie naturelle · Bien-être quotidien · Livraison au Congo 🇨🇬</p>
+  </div>
+
+  <!-- PRIX -->
+  <div class="prix-banner">
+    <div class="prix-info">
+      <strong>THÉ GINSENG — 1 unité</strong>
+      Paiement à la livraison ✅
+    </div>
+    <div class="prix-montant">
+      9 900
+      <span>FCFA / unité</span>
+    </div>
+  </div>
+
+  <!-- GARANTIES -->
+  <div class="garanties">
+    <div class="garantie">
+      <span class="garantie-icon">🚚</span>
+      <div class="garantie-text">Livraison rapide</div>
+    </div>
+    <div class="garantie">
+      <span class="garantie-icon">💳</span>
+      <div class="garantie-text">Paiement à la livraison</div>
+    </div>
+    <div class="garantie">
+      <span class="garantie-icon">🌿</span>
+      <div class="garantie-text">100% naturel</div>
+    </div>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <div class="form-card" id="formCard">
+    <div class="form-title">📋 Votre commande</div>
+
+    <form id="orderForm" onsubmit="soumettreCommande(event)">
+
+      <div class="field">
+        <label>Nom complet <span>*</span></label>
+        <input type="text" id="nom" placeholder="Ex: Marie Mabiala" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label>Numéro WhatsApp <span>*</span></label>
+        <input type="tel" id="telephone" placeholder="Ex: +242 06 XXX XXXX" required autocomplete="tel">
+      </div>
+
+      <div class="field">
+        <label>Ville <span>*</span></label>
+        <select id="ville" required>
+          <option value="">Choisir votre ville...</option>
+          <option value="Brazzaville">Brazzaville</option>
+          <option value="Pointe-Noire">Pointe-Noire</option>
+          <option value="Dolisie">Dolisie</option>
+          <option value="Nkayi">Nkayi</option>
+          <option value="Impfondo">Impfondo</option>
+          <option value="Ouesso">Ouesso</option>
+          <option value="Autre">Autre ville</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Quartier / Adresse</label>
+        <input type="text" id="quartier" placeholder="Ex: Moungali, Bacongo, Poto-Poto...">
+      </div>
+
+      <div class="field">
+        <label>Quantité <span>*</span></label>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" onclick="changerQty(-1)">−</button>
+          <input type="number" id="quantite" class="qty-input" value="1" min="1" max="20" readonly>
+          <button type="button" class="qty-btn" onclick="changerQty(1)">+</button>
+        </div>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="total-box">
+        <div class="total-label">💰 Total à payer</div>
+        <div class="total-val" id="totalAffiche">9 900 <small>FCFA</small></div>
+      </div>
+
+      <!-- BOUTON COMMANDER -->
+      <button type="submit" class="btn-commander" id="btnCommander">
+        <div class="spinner"></div>
+        <div class="btn-text">
+          <span class="btn-icon">💬</span>
+          Commander via WhatsApp
+        </div>
+      </button>
+
+      <div class="note-livraison">
+        <span class="note-icon">ℹ️</span>
+        <span>Après avoir cliqué, WhatsApp s'ouvre avec votre commande déjà rédigée. Envoyez simplement le message !</span>
+      </div>
+
+    </form>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Commande envoyée !</div>
+      <p class="success-text">Votre commande a bien été enregistrée.<br>WhatsApp va s'ouvrir pour finaliser avec la vendeuse.</p>
+      <button class="btn-commander" onclick="nouvelleCommande()" style="max-width:260px;margin:0 auto;">
+        <div class="btn-text"><span>🔄</span> Nouvelle commande</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-note">
+    Commande 100% sécurisée · Paiement uniquement à la livraison<br>
+    <strong>Thé Ginseng Congo</strong> — Livraison dans tout le Congo 🇨🇬
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── CONFIG ──
+  const SUPABASE_URL  = 'https://yapnmyncnijbmdiioamj.supabase.co';
+  const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhcG5teW5jbmlqYm1kaWlvYW1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczNzE2NTAsImV4cCI6MjA5Mjk0NzY1MH0.HdWLlpsdDsPkf_vggG9Ec9zvLr_jNUIVskrFXkNw_vw';
+  const WHATSAPP_NUM  = '24206115I490'; // +242 06 115 1490
+  const PRIX_UNITAIRE = 9900;
+
+  // ── QUANTITÉ ──
+  function changerQty(delta) {
+    const input = document.getElementById('quantite');
+    let val = parseInt(input.value) + delta;
+    if (val < 1) val = 1;
+    if (val > 20) val = 20;
+    input.value = val;
+    mettreAJourTotal();
+  }
+
+  function mettreAJourTotal() {
+    const qty   = parseInt(document.getElementById('quantite').value) || 1;
+    const total = qty * PRIX_UNITAIRE;
+    document.getElementById('totalAffiche').innerHTML =
+      total.toLocaleString('fr-FR') + ' <small>FCFA</small>';
+  }
+
+  document.getElementById('quantite').addEventListener('input', mettreAJourTotal);
+
+  // ── TOAST ──
+  function afficherToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + type;
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ── SOUMETTRE ──
+  async function soumettreCommande(e) {
+    e.preventDefault();
+
+    const nom      = document.getElementById('nom').value.trim();
+    const tel      = document.getElementById('telephone').value.trim();
+    const ville    = document.getElementById('ville').value;
+    const quartier = document.getElementById('quartier').value.trim();
+    const quantite = parseInt(document.getElementById('quantite').value);
+    const total    = quantite * PRIX_UNITAIRE;
+
+    // Validation
+    if (!nom || !tel || !ville) {
+      afficherToast('⚠️ Remplissez tous les champs obligatoires', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('btnCommander');
+    btn.classList.add('loading');
+
+    // ── 1. Enregistrer dans Supabase ──
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/commandes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          nom_client:    nom,
+          telephone:     tel,
+          ville:         ville,
+          quartier:      quartier || null,
+          quantite:      quantite,
+          montant_total: total,
+          statut:        'Nouvelle'
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        console.error('Supabase error:', err);
+        // On continue quand même vers WhatsApp
+      }
+    } catch(err) {
+      console.error('Erreur réseau Supabase:', err);
+      // On continue quand même vers WhatsApp
+    }
+
+    // ── 2. Construire le message WhatsApp ──
+    const adresse = quartier ? `${quartier}, ${ville}` : ville;
+    const message = `Bonjour ! Je souhaite commander 🌿
+
+🛒 Produit : THÉ GINSENG
+📦 Quantité : ${quantite}
+💰 Total : ${total.toLocaleString('fr-FR')} FCFA
+👤 Nom : ${nom}
+📱 Téléphone : ${tel}
+📍 Adresse : ${adresse}
+
+✅ Paiement à la livraison`;
+
+    const url = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(message)}`;
+
+    // ── 3. Afficher le succès ──
+    btn.classList.remove('loading');
+    document.getElementById('orderForm').style.display = 'none';
+    document.getElementById('successOverlay').classList.add('show');
+    afficherToast('✅ Commande enregistrée !', 'success');
+
+    // ── 4. Ouvrir WhatsApp (léger délai) ──
+    setTimeout(() => { window.open(url, '_blank'); }, 600);
+  }
+
+  function nouvelleCommande() {
+    document.getElementById('orderForm').reset();
+    document.getElementById('orderForm').style.display = 'block';
+    document.getElementById('successOverlay').classList.remove('show');
+    document.getElementById('quantite').value = 1;
+    mettreAJourTotal();
+  }
+</script>
+</body>
+</html>

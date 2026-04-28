@@ -470,6 +470,16 @@
 
   document.getElementById('quantite').addEventListener('input', mettreAJourTotal);
 
+  // ── LIRE QUANTITÉ DANS L'URL ──
+  window.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const qte = parseInt(params.get('quantite'));
+    if (qte && qte >= 1 && qte <= 20) {
+      document.getElementById('quantite').value = qte;
+    }
+    mettreAJourTotal();
+  });
+
   // ── TOAST ──
   function afficherToast(msg, type = '') {
     const t = document.getElementById('toast');
